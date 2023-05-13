@@ -1,0 +1,20 @@
+{
+  "name": "node-starter",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.17.1",
+    "figlet": "^1.6.0",
+    "firebase-auto-ids": "^1.1.0",
+    "json-server": "^0.17.3",
+    "node-jq": "^2.3.5",
+    "nodemailer": "^6.9.2",
+    "xcurl": "^1.8.3"
+  },
+  "type": "module"
+}

@@ -1,0 +1,6 @@
+- Create folder for http plugin
+  - Define all orders routes in a separate file from the main logic with `express.router()`
+- Handle some or all of requested inventory being unavailable
+- Send email to user associated with order on `orders.inventory_unavailable` event
+- Send email to admin re: `orders.inventory_unavailable` event
+- Ensure happy path for `orders.order_received` event works
