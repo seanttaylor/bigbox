@@ -40,14 +40,6 @@ export default function PluginFactory(db) {
       let alertThreshold;
 
       inventoryItem.qty -= orderItem.qty;
-
-      /*
-      console.log({
-        orderItem,
-        inventoryItem,
-      });
-      */
-
       currentItemInventoryLevel = inventoryItem.qty;
       alertThreshold = inventoryItem.inventoryAlertThreshold;
 
@@ -56,8 +48,13 @@ export default function PluginFactory(db) {
       }
     }
 
-    #onFulfillment(eventData) {
-      const { id } = eventData;
+    /**
+     * 
+     * @param {Message} message 
+     * @returns 
+     */
+    #onFulfillment(message) {
+      const { payload: { id } } = message.value();
       const unavailableItems = [];
 
       console.info(`Info: Preparing order... (${id})`);

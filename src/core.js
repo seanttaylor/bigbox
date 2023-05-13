@@ -1,5 +1,7 @@
 import id from 'firebase-auto-ids';
 
+import { Message, MessageHeader, MessageBody } from './lib/message/index.js';
+
 export default class CoreSystem {
   constructor() {
     this.plugins = [];
@@ -56,14 +58,21 @@ export default class CoreSystem {
    * @param {Any} data
    */
   emit(event, data) {
+    const eventId = this.generateId();
+    const message = new Message(
+      new MessageHeader({ id: eventId, eventName: event}),
+      new MessageBody(data)
+    );
+
     if (this.listeners[event]) {
       this.listeners[event].forEach((listener) => {
         this.emittedEvents.push({
-          id: this.generateId(),
+          id: eventId,
           name: event,
           timestamp: new Date().toISOString(),
         });
-        listener(data);
+
+        listener(message);
       });
       console.log(`Core system emitted event (${event})`);
     }

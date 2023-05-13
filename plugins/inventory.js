@@ -2,9 +2,20 @@ import nodemailer from 'nodemailer';
 
 import MKPlugin from '../src/plugin.js';
 
-export default function PluginFactory(db) {
+const IC_ADMIN_EMAIL = 'adelia.orn45@ethereal.email';
+const IC_ADMIN_PASSWORD = 'tuSuyM2kv1zzp6HCPg';
+const INVENTORY_REPORT_INTERVAL_MILLIS = 30000;
+
+/**
+ * 
+ * @param {Object} db 
+ * @param {Object} EmailTemplate 
+ * @returns 
+ */
+export default function PluginFactory(db, EmailTemplate) {
   class Mailer extends MKPlugin {
     #transporter;
+    #unavailableItems = [];
     #core;
 
     constructor(name = 'com.beepboop.plugin.mail', version = '0.0.1') {
@@ -39,10 +50,28 @@ export default function PluginFactory(db) {
 
       const outboundMessage = await this.#transporter.sendMail(message);
 
-      console.log({
+      console.info(`Info: Outbound email delivered (${message.to})`, {
         messageId: outboundMessage.messageId,
         messagePreviewURL: nodemailer.getTestMessageUrl(outboundMessage),
       });
+    }
+
+    /**
+     * @param {Message} message
+     */
+    #onInventoryReportRequired() {
+      //this.#unavailableItems
+      // Pull current inventory from database
+      // Highlight items currently unavailable
+
+      /*
+      this.#send({
+        to: [IC_ADMIN_EMAIL],
+        from: 'backend@bigbox.com',
+        subject: 'Inventory Report',
+        html: await EmailTemplate.of({ templateName: 'orders.inventory_unavailable', data: { unavailableItems })
+      });
+      */
     }
 
     /**
@@ -51,27 +80,20 @@ export default function PluginFactory(db) {
     #onLowInventoryDetected(eventData) {}
 
     /**
-     * @param {Object} eventData
+     * @param {Message} message
      */
-    #onInventoryUnavailable(eventData) {
-      console.log({ eventData });
-
-      const order = db.orders.find((i) => i.id === eventData.orderId);
+    async #onInventoryUnavailable(message) {
+      const { payload } = message.value();
+      const order = db.orders.find((i) => i.id === payload.orderId);
       const user = db.users.find((u) => u.id === order.customerId);
 
-      //console.log({ user, order });
+      this.#unavailableItems = [...this.#unavailableItems, ...payload.unavailableItems];
 
       this.#send({
         to: [user.emailAddress],
-        from: 'backend@bigbox.com',
-        subject: 'Unavailable Items',
-        html: `
-        <div>
-          <p>Some of the items you ordered are unavailable</p>
-          <code>
-            ${eventData.unavailableItems}
-          </code>
-        </div>`,
+        from: 'support@bigbox.com',
+        subject: 'Some of your items are unvailable',
+        html: await EmailTemplate.of({ templateName: 'orders.inventory_unavailable', data: { user, ...payload } })
       });
     }
 
@@ -95,6 +117,15 @@ export default function PluginFactory(db) {
         'items.low_inventory_detected',
         this.#onLowInventoryDetected.bind(this)
       );
+
+      core.on(
+        'items.inventory_report_required',
+        this.#onInventoryReportRequired.bind(this)
+      );
+
+      setInterval(() => {
+        core.emit('items.inventory_report_required'); 
+      }, INVENTORY_REPORT_INTERVAL_MILLIS);
     }
   }
 

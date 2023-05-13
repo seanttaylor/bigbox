@@ -11,10 +11,11 @@ export default function PluginFactory(db) {
     }
 
     /**
-     *
+     * @param {Message} message
      */
-    #onPaymentApproved(eventData) {
-      const { orderId, authorization } = eventData;
+    #onPaymentApproved(message) {
+      const { payload } = message.value();
+      const { orderId, authorization } = payload;
 
       const approvedOrder = db.orders.find((item) => item.id === orderId);
 

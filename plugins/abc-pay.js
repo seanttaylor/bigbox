@@ -10,8 +10,12 @@ export default function PluginFactory() {
       super(name, version);
     }
 
-    #onPaymentReceived(eventData) {
-      const { orderId } = eventData;
+    /**
+     * 
+     * @param {Message} message 
+     */
+    #onPaymentReceived(message) {
+      const { payload: { orderId } } = message.value();
 
       setTimeout(() => {
         this.#core.emit('payments.payment_approved', {

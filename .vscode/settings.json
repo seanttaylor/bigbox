@@ -1,6 +1,6 @@
 {
-  "editor.fontSize": 17,
-  "terminal.integrated.fontSize": 16,
+  "editor.fontSize": 18,
+  "terminal.integrated.fontSize": 18,
   "editor.wordWrap": "on"
   /**
    * Controls whether suggestions should be accepted on commit characters.
@@ -187,7 +187,7 @@
   /**
    * Control the behavior and rendering of the minimap.
    */
-  // "editor.minimap": { "enabled": false },
+  ,"editor.minimap": { "enabled": false },
   /**
    * The modifier to be used to add multiple cursors with the mouse.
    * Can be: 'alt' or 'ctrlCmd'.
