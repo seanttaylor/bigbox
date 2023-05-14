@@ -2,7 +2,7 @@ export default {
   items: [
     {
       id: '-NVBeWE2_YL92DY9ZJdC',
-      qty: 0,
+      qty: 25,
       name: 'cookie',
       pointsBonus: 1,
       inventoryAlertThreshold: 2,

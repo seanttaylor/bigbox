@@ -1,5 +1,10 @@
 import MKPlugin from '../src/plugin.js';
 
+/**
+ * 
+ * @param {Object} db - an instance of the database
+ * @returns {OrderFulfillment}
+ */
 export default function PluginFactory(db) {
   class OrderFulfillment extends MKPlugin {
     #core;
@@ -76,6 +81,7 @@ export default function PluginFactory(db) {
       }
 
       orderItems.forEach(this.#processOrderItem);
+      order.status.order = 'completed';
 
       this.#core.emit('orders.order_fulfilled');
     }

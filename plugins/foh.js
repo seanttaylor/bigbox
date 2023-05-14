@@ -2,6 +2,11 @@ import jsonServer from 'json-server';
 
 import MKPlugin from '../src/plugin.js';
 
+/**
+ * 
+ * @param {Object} db - an instance of the database
+ * @returns {HTTPServer}
+ */
 export default function PluginFactory(db) {
   class HTTPServer extends MKPlugin {
     #core;
@@ -19,9 +24,9 @@ export default function PluginFactory(db) {
 
       const approvedOrder = db.orders.find((item) => item.id === orderId);
 
-      approvedOrder.paymentStatus = 'approved';
+      approvedOrder.status.payment = 'approved';
+      approvedOrder.status.order = 'preparing';
       approvedOrder.authorizationId = authorization;
-      approvedOrder.status = 'preparing';
 
       this.#core.emit('orders.fulfillment_required', approvedOrder);
     }

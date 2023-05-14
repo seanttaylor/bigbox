@@ -7,6 +7,7 @@ import Core from './src/core.js';
 import PluginFOH from './plugins/foh.js';
 import PluginABCPayments from './plugins/abc-pay.js';
 import PluginFulfillment from './plugins/fulfillment.js';
+import PluginMailer from './plugins/mailer.js';
 import PluginInventory from './plugins/inventory.js';
 
 /******** LIBRARIES ********/
@@ -25,13 +26,15 @@ const core = new Core();
 const foh = PluginFOH(db);
 const abcPayments = PluginABCPayments();
 const fulfillment = PluginFulfillment(db);
-const inventory = PluginInventory(db, EmailTemplate);
+const mailer = PluginMailer(db, EmailTemplate);
+const inventory = PluginInventory(db);
 
 /******** PLUGIN REGISTRATION ********/
 
 core.registerPlugin(foh);
 core.registerPlugin(abcPayments);
 core.registerPlugin(fulfillment);
+core.registerPlugin(mailer);
 core.registerPlugin(inventory);
 
 /******** APP START ********/

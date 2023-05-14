@@ -2,6 +2,10 @@ import MKPlugin from '../src/plugin.js';
 
 import { faker } from '@faker-js/faker';
 
+/**
+ * 
+ * @returns {ABCPaymentProcessor}
+ */
 export default function PluginFactory() {
   class ABCPaymentProcessor extends MKPlugin {
     #core;

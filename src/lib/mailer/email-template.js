@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const renderFile = promisify(_renderFile);
 const templateLibrary = {
    'orders.inventory_unavailable': `${__dirname}/inventory-unavailable.ejs`,
+   'items.inventory_report_required': `${__dirname}/inventory-report-required.ejs`,
 };
 
 /**
