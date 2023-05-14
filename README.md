@@ -1,6 +1,6 @@
 # bigbox
 
-The next online everything store
+The next online everything store.
 
 ## Local Development
 
@@ -19,7 +19,18 @@ The next online everything store
   - `curl -X POST http://localhost:3000/orders/:orderId/payment`
 
 - Get current inventory
-  - `curl -X POST http://localhost:3000/inventory`
+  - `curl -X POST http://localhost:3000/items`
 
 - Get all emitted system events
   - `curl http://localhost:3000/events`
+
+
+  ### Architecture Notes
+
+  This application is an example of an the Microkernel Architectural pattern.
+
+  The application core is the heart of this pattern. It provides a simple interface for registering and starting plugins. A plugin will register with the application and on start, the application will launch all registered plugins.
+
+  ![Microkernel Architecture diagram](./docs/microkernel-architecture-diagram.png)
+
+   Note that the plugins cannot communicate with each other directly. They can only talk to the application core. This is a fundamental principle of the Microkernel architecture, where the application core acts as a mediator between plugins, providing a well-defined interface for communication.
