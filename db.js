@@ -42,6 +42,7 @@ export default {
       emailAddress: 'aliya.lemke@ethereal.email',
       role: ['admin'],
       createdDate: '2023-05-12T20:13:56.500Z',
+      pointsBalance: 100
     },
     {
       id: '-NVKP0GfTT3RjDk_p4NQ',
@@ -50,6 +51,7 @@ export default {
       emailAddress: 'antonietta.bartell@ethereal.email',
       role: ['user'],
       createdDate: '2023-05-12T20:13:56.500Z',
+      pointsBalance: 100
     },
   ],
 };

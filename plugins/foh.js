@@ -43,6 +43,14 @@ export default function PluginFactory(db) {
       _jsonServer.use(jsonServer.bodyParser);
       _jsonServer.use(middlewares);
 
+      // See: https://github.com/typicode/json-server#custom-output-example for more info
+      jsonRouter.render = (req, res) => {
+        res.json({
+          count: res.locals.data.length,
+          entries: res.locals.data
+        })
+      }
+
       /**
        *
        */

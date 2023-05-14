@@ -1,6 +1,6 @@
 # bigbox
 
-The next everything store
+The next online everything store
 
 ## Local Development
 

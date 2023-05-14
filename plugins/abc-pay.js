@@ -1,7 +1,5 @@
 import MKPlugin from '../src/plugin.js';
 
-import { faker } from '@faker-js/faker';
-
 /**
  * 
  * @returns {ABCPaymentProcessor}
